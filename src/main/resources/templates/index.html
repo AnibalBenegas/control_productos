@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de productos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/gestion.producto.css">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- N A V B A R -->
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand text-white-50" href="/">Control de Productos</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active text-white-50" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white-50" href="/nuevo">Agregar Productos</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link">Disabled</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex" role="search" th:action="@{/}">
+                            <input type="text" name="palabraClave" id="palabraClave" th:value="${palabraClave}" class="form-control me-2"
+                                placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i>&nbsp;Search</button>
+                            &nbsp;
+                            <button class="btn btn-outline-secondary mx-6" type="button" onclick="limpiarCampos()">&nbsp;Limpiar</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br>
+        <!-- M E N S A J E   D E   E X I T O -->
+
+
+        <!-- C O N T E N I D O -->
+        <table class="table table-striped table-hover table-sm table-bordered border-primary fs-8">
+            <thead class="table-dark ">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Origen</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody th:each="tmp : ${producto}" >
+                <tr class="fs-10 fst-italic">
+                    <td th:text="${tmp.id}"></td>
+                    <td th:text="${tmp.codigo}"></td>
+                    <td th:text="${tmp.nombre}"></td>
+                    <td th:text="${tmp.marca}"></td>
+                    <td th:text="${tmp.hechoEn}"></td>
+                    <td th:text="${'$ '+tmp.precio + ',99'}"></td>
+                    
+                    <td class="table-active">
+                        <!---->
+                        <div class="btn-group" role="group" aria-label="Basic example">
+
+                            <button type="button" class="btn btn-outline-warning  btn-sm mx-1"><a
+                                    th:href="@{'/editar/' + ${tmp.id}}"><i class="far fa-edit"></i>&nbsp;Editar</a>
+                            </button>
+
+                            <button type="button" class="btn btn-outline-danger  btn-sm">
+                                <form  method="post">
+                                <a th:href="@{'/eliminar/' + ${tmp.id}}"><i
+                                        class="fas fa-trash-alt"></i>&nbsp;Eliminar</a>
+                                    </form>
+                            </button>
+                            <!-- th:href="@{/{id}/eliminar/(id=${tmp.id})}" 
+                                <form  method="post">
+                                </form>-->
+                        </div>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        function limpiarCampos(){
+            window.location='/';
+        }
+    </script>
+</body>
+
+</html>
